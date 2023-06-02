@@ -1,0 +1,144 @@
+body {
+	margin: 0;
+	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI',
+	  'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans',
+	  'Droid Sans', 'Helvetica Neue', sans-serif;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+  }
+  
+  code {
+	font-family: source-code-pro, Menlo, Monaco, Consolas,
+	  'Courier New', monospace;
+  }
+  
+  .header {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+  }
+  
+  .dark-mode {
+	background-color: black;
+  }
+  
+  .dark-mode h1 {
+	color: white;
+  }
+  
+  .container {
+	max-width: 960px;
+	margin-right: auto;
+	margin-left: auto;
+	padding-right: 15px;
+	padding-left: 15px;
+	min-height: 100vh;
+  }
+  
+  .notes-list {
+	display: grid;
+	grid-gap: 1rem;
+	grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); /* Größere Mindestbreite */
+	grid-auto-rows: minmax(200px, auto); /* Dynamische Zeilenhöhe */
+  }
+  
+  
+  .note.new {
+	background-color: #67d7cc;
+  }
+  
+  textarea {
+	border: none;
+	resize: none;
+	background-color: #67d7cc;
+	width: 100%;
+  }
+  
+  textarea:focus {
+	outline: none;
+  }
+  
+  .save {
+	background-color: #e1e1e1;
+	border: none;
+	border-radius: 15px;
+	padding: 5px 10px;
+	cursor: pointer;
+  }
+  
+  .save:hover {
+	background-color: #ededed;
+  }
+  
+  .note {
+	background-color: #fef68a;
+	border-radius: 10px;
+	padding: 1rem;
+	min-height: 170px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	white-space: pre-wrap;
+  }
+  
+  .note-footer {
+	display: flex;
+	align-items: center;
+	justify-content: space-between;
+  }
+  
+  .delete-icon {
+	cursor: pointer;
+  }
+  
+  .search {
+	display: flex;
+	align-items: center;
+	background-color: rgb(233, 233, 233);
+	border-radius: 10px;
+	padding: 5px;
+	margin-bottom: 1.5em;
+  }
+  
+  .search input {
+	border: none;
+	background-color: rgb(233, 233, 233);
+	width: 100%;
+  }
+  
+  .search input:focus {
+	outline: none;
+  }
+  
+  .map-container {
+	width: 100%;
+	height: 350px;
+	margin-bottom: 1rem;
+  }
+  
+  .weather {
+	margin-top: 0.5rem;
+  }
+  
+  .note-delete-container {
+	display: flex;
+	justify-content: flex-end;
+	margin-top: 1rem;
+  }
+  
+  .note-delete-icon {
+	cursor: pointer;
+	color: red;
+	font-size: 1.3em;
+  }
+  
+  .expired{
+	background-color: green;
+	border-radius: 10px;
+	padding: 1rem;
+	min-height: 170px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+	white-space: pre-wrap;
+  }
