@@ -206,6 +206,7 @@ const Note = ({ id, text, place, date, time, handleDeleteNote }) => {
       </div>
     </div>
   );
+  
 };
 
 export default Note;
