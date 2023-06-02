@@ -165,8 +165,8 @@ const Note = ({ id, text, place, date, time, handleDeleteNote }) => {
     <div id={id} className={`note ${isExpired ? 'expired' : ''}`}>
       <span>{text}</span>
       <span>{date}, {time}</span>
-      <div className='map-container' ref={mapContainerRef}></div>
       <span>{place}</span>
+      <div className='map-container' ref={mapContainerRef}></div>
       <div className='note-footer'>
         {weather && (
           <div className='weather'>
