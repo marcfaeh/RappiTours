@@ -91,8 +91,10 @@ const Note = ({ id, text, place, date, time, handleDeleteNote }) => {
     const fetchLocation = async () => {
       try {
         const apiKey = "MS1lsDKQez5pgHglR1dOjZosE8ul6TuB"; // Füge hier deinen TomTom-API-Schlüssel ein
+        // Fetch the location coordinates and store them
         const { latitude, longitude } = await geocodeLocation(place, apiKey);
         if (!map) {
+          // Initialize the map using the coordinates
           const newMap = initializeMap(parseFloat(latitude), parseFloat(longitude));
           setMap(newMap);
           renderMap(newMap);
@@ -121,7 +123,45 @@ const Note = ({ id, text, place, date, time, handleDeleteNote }) => {
       center: [longitude, latitude],
       zoom: 12,
     });
+
+    // Add a marker for the place
+    const marker = new tt.Marker().setLngLat([longitude, latitude]).addTo(map);
+
+    // Add a click event listener to the marker
+    marker.on('click', () => {
+      // Get the current location of the user
+      getCurrentLocation((currentLatitude, currentLongitude) => {
+        // Open the route planning view for the current location and the place
+        tt.services
+          .routes({
+            key: "MS1lsDKQez5pgHglR1dOjZosE8ul6TuB",
+            container: map,
+          })
+          .plan([
+            { lat: currentLatitude, lon: currentLongitude },
+            { lat: latitude, lon: longitude },
+          ])
+          .go();
+      });
+    });
+
     return map;
+  };
+
+  const getCurrentLocation = (callback) => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition(
+        (position) => {
+          const { latitude, longitude } = position.coords;
+          callback(latitude, longitude);
+        },
+        (error) => {
+          console.error("Error getting current location:", error);
+        }
+      );
+    } else {
+      console.error("Geolocation is not supported by this browser.");
+    }
   };
 
   const renderMap = (map) => {
@@ -206,10 +246,7 @@ const Note = ({ id, text, place, date, time, handleDeleteNote }) => {
       </div>
     </div>
   );
+  
 };
 
 export default Note;
-
-
-
-
