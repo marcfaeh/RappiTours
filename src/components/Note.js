@@ -164,9 +164,10 @@ const Note = ({ id, text, place, date, time, handleDeleteNote }) => {
   return (
     <div id={id} className={`note ${isExpired ? 'expired' : ''}`}>
       <span>{text}</span>
+      <span>{date}, {time}</span>
+      <div className='map-container' ref={mapContainerRef}></div>
       <span>{place}</span>
       <div className='note-footer'>
-        <div className='map-container' ref={mapContainerRef}></div>
         {weather && (
           <div className='weather'>
             <div className='weather-icon'>
@@ -192,8 +193,6 @@ const Note = ({ id, text, place, date, time, handleDeleteNote }) => {
           </div>
         )}
         <div>
-          <small>{date}</small>
-          <small>{time}</small>
           <button onClick={toggleExtendedWeather}>
             {showExtendedWeather ? 'Weniger anzeigen' : 'Mehr anzeigen'}
           </button>
