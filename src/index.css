@@ -1,29 +1,49 @@
 body {
 	margin: 0;
-	font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI',
-	  'Roboto', 'Oxygen', 'Ubuntu', 'Cantarell', 'Fira Sans',
-	  'Droid Sans', 'Helvetica Neue', sans-serif;
+	font-family: 'Rockwell', 'Times New Roman';
 	-webkit-font-smoothing: antialiased;
 	-moz-osx-font-smoothing: grayscale;
+	background-color: #A1BBCE;
   }
   
   code {
-	font-family: source-code-pro, Menlo, Monaco, Consolas,
-	  'Courier New', monospace;
+	font-family: 'Rockwell', 'Times New Roman';
   }
   
   .header {
 	display: flex;
 	align-items: center;
 	justify-content: space-between;
+	font-weight: normal;
+	color: #162F3B;
   }
   
   .dark-mode {
-	background-color: black;
+	background-color: #11242D;
   }
   
   .dark-mode h1 {
-	color: white;
+	color: #A1BBCE;
+  }
+
+  .dark-mode .toggle {
+	background-color: #162F3B;
+	color: #A1BBCE;
+	border: 2px solid #A1BBCE;
+  }
+
+  .dark-mode .toggle:hover {
+	background-color: #A1BBCE;
+	color: #162F3B;
+	border: 2px solid #162F3B;
+  }
+
+  .dark-mode .search {
+	background-color: #A1BBCE;
+  }
+
+  .dark-mode .search input {
+	background-color: #A1BBCE;
   }
   
   .container {
@@ -44,34 +64,62 @@ body {
   
   
   .note.new {
-	background-color: #67d7cc;
+	background-color: #763626;
+	color: #F0D7D1;
   }
   
   textarea {
 	border: none;
 	resize: none;
-	background-color: #67d7cc;
+	background-color: #763626;
+	color: #F0D7D1;
 	width: 100%;
+	font-size: 16px;
+  }
+
+  textarea::placeholder {
+	color: #F0D7D1;
+	font-size: 16px;
   }
   
   textarea:focus {
 	outline: none;
   }
   
-  .save {
-	background-color: #e1e1e1;
+  .toggle {
+	background-color: #F2F5F8;
 	border: none;
 	border-radius: 15px;
 	padding: 5px 10px;
 	cursor: pointer;
+	font-family: 'Rockwell', 'Times New Roman';
+	font-size: 14px;
+	color:#162F3B;
   }
   
+  .toggle:hover {
+	background-color: #162F3B;
+	color: #F2F5F8;
+  }
+  
+  .save {
+	border-radius: 15px;
+	padding: 5px 10px;
+	cursor: pointer;
+	font-family: 'Rockwell', 'Times New Roman';
+	font-size: 14px;
+	background-color: #763626;
+	color: #F0D7D1;
+	border: 2px solid #F0D7D1;
+  }
+
   .save:hover {
-	background-color: #ededed;
+	color: #763626;
+	background-color: #F0D7D1;
   }
-  
+
   .note {
-	background-color: #fef68a;
+	background-color: #CCC5B7;
 	border-radius: 10px;
 	padding: 1rem;
 	min-height: 170px;
@@ -79,6 +127,28 @@ body {
 	flex-direction: column;
 	justify-content: space-between;
 	white-space: pre-wrap;
+	color: #302C21;
+  }
+
+  .noteTitle {
+	font-size: 20px;
+	font-weight: bold;
+  }
+
+  .showMoreWeather {
+	border-radius: 15px;
+	padding: 5px 10px;
+	cursor: pointer;
+	font-family: 'Rockwell', 'Times New Roman';
+	font-size: 12px;
+	background-color: #CCC5B7;
+	color: #302C21;
+	border: 2px solid #302C21;
+  }
+
+  .showMoreWeather:hover {
+	color: #CCC5B7;
+	background-color: #302C21;
   }
   
   .note-footer {
@@ -87,23 +157,22 @@ body {
 	justify-content: space-between;
   }
   
-  .delete-icon {
-	cursor: pointer;
-  }
-  
   .search {
 	display: flex;
 	align-items: center;
-	background-color: rgb(233, 233, 233);
+	background-color: #F2F5F8;
 	border-radius: 10px;
 	padding: 5px;
 	margin-bottom: 1.5em;
+	font-family: 'Rockwell', 'Times New Roman';
+	font-size: 16px;
   }
   
   .search input {
 	border: none;
-	background-color: rgb(233, 233, 233);
+	background-color: #F2F5F8;
 	width: 100%;
+	font-family: 'Rockwell', 'Times New Roman';
   }
   
   .search input:focus {
@@ -112,7 +181,7 @@ body {
   
   .map-container {
 	width: 100%;
-	height: 350px;
+	height: 300px;
   }
 
   .tomtomAttribution {
@@ -120,7 +189,7 @@ body {
   }
   
   .weather {
-	margin-top: 0.5rem;
+	margin-top: 1rem;
   }
   
   .note-delete-container {
@@ -131,12 +200,16 @@ body {
   
   .note-delete-icon {
 	cursor: pointer;
-	color: red;
+	color: #302C21;
 	font-size: 1.3em;
+  }
+
+  .note-delete-icon:hover {
+	color:#87331C;
   }
   
   .expired{
-	background-color: green;
+	background-color: #524A3A;
 	border-radius: 10px;
 	padding: 1rem;
 	min-height: 170px;
@@ -144,4 +217,26 @@ body {
 	flex-direction: column;
 	justify-content: space-between;
 	white-space: pre-wrap;
+	color: #DDD9CF;
   }
+
+  .expired .note-delete-icon {
+	color: #DDD9CF;
+  }
+
+  .expired .note-delete-icon:hover {
+	color: #d75e3d;
+  }
+
+  .expired .showMoreWeather {
+	background-color: #524A3A;
+	color:#DDD9CF;
+	border: 2px solid #DDD9CF;
+  }
+
+  .expired .showMoreWeather:hover {
+	background-color: #DDD9CF;
+	color:#524A3A;
+  }
+
+  
