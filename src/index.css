@@ -85,6 +85,16 @@ body {
   textarea:focus {
 	outline: none;
   }
+
+  .datePicker {
+	border-radius: 10px;
+	width: 100%;
+  }
+
+  .timePicker {
+	border-radius: 10px;
+	width: 100%;
+  }
   
   .toggle {
 	background-color: #F2F5F8;

@@ -52,12 +52,14 @@ const AddNote = ({ handleAddNote }) => {
       ></textarea>
 
       <ReactDatePicker
+        className='datePicker'
         selected={selectedDate}
         onChange={date => setSelectedDate(date)}
         dateFormat="dd/MM/yyyy"
       />
 
       <input
+        className='timePicker'
         type='time'
         value={noteTime}
         onChange={(event) => setNoteTime(event.target.value)}
