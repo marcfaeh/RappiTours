@@ -44,6 +44,7 @@ const geocodeLocation = async (place, apiKey) => {
     throw error;
   }
 };
+
 const getWeatherIcon = (weatherDescription) => {
   switch (weatherDescription) {
     case 'clear sky':
@@ -59,10 +60,17 @@ const getWeatherIcon = (weatherDescription) => {
       return <WiSnow />;
     case 'thunderstorm':
       return <WiThunderstorm />;
+    case 'mist':
+    case 'smoke':
+    case 'haze':
+    case 'dust':
+    case 'fog':
+      return <WiCloudy />; //Cloudy anstatt Fog
     default:
       return null;
   }
 };
+
 
 const Note = ({ id, text, place, date, time, handleDeleteNote }) => {
   const [weather, setWeather] = useState(null);
@@ -97,7 +105,6 @@ const Note = ({ id, text, place, date, time, handleDeleteNote }) => {
           // Initialize the map using the coordinates
           const newMap = initializeMap(parseFloat(latitude), parseFloat(longitude));
           setMap(newMap);
-          renderMap(newMap);
         }
       } catch (error) {
         console.error(error);
@@ -124,59 +131,14 @@ const Note = ({ id, text, place, date, time, handleDeleteNote }) => {
       zoom: 12,
     });
 
-    // Add a marker for the place
-    const marker = new tt.Marker().setLngLat([longitude, latitude]).addTo(map);
-
-    // Add a click event listener to the marker
-    marker.on('click', () => {
-      // Get the current location of the user
-      getCurrentLocation((currentLatitude, currentLongitude) => {
-        // Open the route planning view for the current location and the place
-        tt.services
-          .routes({
-            key: "MS1lsDKQez5pgHglR1dOjZosE8ul6TuB",
-            container: map,
-          })
-          .plan([
-            { lat: currentLatitude, lon: currentLongitude },
-            { lat: latitude, lon: longitude },
-          ])
-          .go();
-      });
-    });
-
     return map;
-  };
-
-  const getCurrentLocation = (callback) => {
-    if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition(
-        (position) => {
-          const { latitude, longitude } = position.coords;
-          callback(latitude, longitude);
-        },
-        (error) => {
-          console.error("Error getting current location:", error);
-        }
-      );
-    } else {
-      console.error("Geolocation is not supported by this browser.");
-    }
-  };
-
-  const renderMap = (map) => {
-    if (mapContainerRef.current && map) {
-      mapContainerRef.current.appendChild(map.getContainer());
-    }
   };
 
   const fetchExtendedWeather = async () => {
     const apiKey = "cdad07a820ea7f97ae355d448d72a1dc"; // Füge hier deinen OpenWeatherMap-API-Schlüssel ein
-    const extendedDateBefore = moment(date, 'DD/MM/yyyy').subtract(2, 'hours');
-    const extendedDateAfter = moment(date, 'DD/MM/yyyy').add(2, 'hours');
     const currentDatePlus14Days = moment().add(14, 'days');
 
-    if (extendedDateBefore.isAfter(currentDatePlus14Days) || extendedDateAfter.isAfter(currentDatePlus14Days)) {
+    if (moment(date, 'DD/MM/yyyy').isAfter(currentDatePlus14Days)) {
       // Trail liegt mehr als 14 Tage in der Zukunft, kein erweitertes Wetter anzeigen
       setExtendedWeather(null);
       return;
@@ -184,8 +146,7 @@ const Note = ({ id, text, place, date, time, handleDeleteNote }) => {
 
     try {
       const extendedWeatherDataBefore = await getWeatherData(place, apiKey);
-      const extendedWeatherDataAfter = await getWeatherData(place, apiKey);
-      setExtendedWeather({ before: extendedWeatherDataBefore, after: extendedWeatherDataAfter });
+      setExtendedWeather({ before: extendedWeatherDataBefore });
     } catch (error) {
       console.error(error);
     }
@@ -203,33 +164,23 @@ const Note = ({ id, text, place, date, time, handleDeleteNote }) => {
 
   return (
     <div id={id} className={`note ${isExpired ? 'expired' : ''}`}>
-      <span className='noteTitle'>{text}</span>
+      <span style={{ fontSize: '20px', fontWeight: 'bold' }}>{text}</span>
       <span>{date}, {time}</span>
       <span>{place}</span>
       <div className='map-container' ref={mapContainerRef}></div>
       <div className='note-footer'>
         {weather && (
           <div className='weather'>
-            <div className='weather-icon'>
+            <div className='weather-icon' style={{ fontSize: '40px' }}>
               {getWeatherIcon(weather.weatherDescription)}
             </div>
-            <span>{weather.temperature}°C, {weather.weatherDescription}</span>
           </div>
         )}
         {showExtendedWeather && extendedWeather && (
           <div className='extended-weather'>
             <div className='weather-icon'>
-              {getWeatherIcon(extendedWeather.before.weatherDescription)}
+              <span>{extendedWeather.before.temperature}°C, {extendedWeather.before.weatherDescription}</span>
             </div>
-            <span>
-              {extendedWeather.before.temperature}°C, {extendedWeather.before.weatherDescription}
-            </span>
-            <div className='weather-icon'>
-              {getWeatherIcon(extendedWeather.after.weatherDescription)}
-            </div>
-            <span>
-              {extendedWeather.after.temperature}°C, {extendedWeather.after.weatherDescription}
-            </span>
           </div>
         )}
         <div>
@@ -246,7 +197,6 @@ const Note = ({ id, text, place, date, time, handleDeleteNote }) => {
       </div>
     </div>
   );
-  
 };
 
 export default Note;
